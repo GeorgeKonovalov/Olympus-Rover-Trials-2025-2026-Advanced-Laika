@@ -12,31 +12,31 @@ while True:
         kmin = float(input("Enter radius of drum\n"))         #Radial domain
         break
     except ValueError:
-        print("Invalid input. Please enter a valid number for drum radius.")
+        print("Invalid input. Please enter a valid number for drum radius.\n")
 
 while True:
     try:
         kmax = float(input("Enter radius of screw\n"))       #Radial domain
         break
     except ValueError:
-        print("Invalid input. Please enter a valid number for screw radius.")
+        print("Invalid input. Please enter a valid number for screw radius.\n")
 
 while True:
     try:
         Height = float(input("Enter height of screw\n"))     #Vertical domain
         break
     except ValueError:
-        print("Invalid input. Please enter a valid number for screw height.")
+        print("Invalid input. Please enter a valid number for screw height.\n")
 
 while True:
     try:
         HelixAngle = float(input("Enter angle of screw (degrees)\n")) * np.pi / 180.0    
         break
     except ValueError:
-        print("Invalid input. Please enter a valid number for screw angle.")
+        print("Invalid input. Please enter a valid number for screw angle.\n")
 
 c = kmax * np.tan(HelixAngle) #Vertical rise per radian
-print(f"Number of turns: {Height / (2 * np.pi * c):.2f}")
+print(f"Number of turns: {Height / (2 * np.pi * c):.2f}\n")
 tmin, tmax = 0.0, Height / c  #Angle domain
 
 while True:
@@ -44,39 +44,39 @@ while True:
         ThicknessMin = float(input("Enter minimum thickness of screw\n"))
         #Ensure thickness is less than pitch
         if ThicknessMin >= c * 2 * np.pi:
-            print(f"Thickness ({ThicknessMin}) must be smaller than the helix pitch ({c * 2 * np.pi:.3f}).")
+            print(f"Thickness ({ThicknessMin}) must be smaller than the helix pitch ({c * 2 * np.pi:.3f}).\n")
             continue
         break
     except ValueError:
-        print("Invalid input. Please enter a valid number for thickness.")
+        print("Invalid input. Please enter a valid number for thickness.\n")
 
 while True:
     try:
         DrumTopExtension = float(input("Enter extension of drum above screw\n"))
         break
     except ValueError:
-        print("Invalid input. Please enter a valid number for drum top extension.")
+        print("Invalid input. Please enter a valid number for drum top extension.\n")
 
 while True:
     try:
         DrumBottomExtension = float(input("Enter extension of drum below screw\n"))
         break
     except ValueError:
-        print("Invalid input. Please enter a valid number for drum bottom extension.")
+        print("Invalid input. Please enter a valid number for drum bottom extension.\n")
 
 while True:
     try:
         SamplePerUnitT = int(input("Enter samples per unit angle (t)\n"))
         break
     except ValueError:
-        print("Invalid input. Please enter a valid integer for samples per unit angle.")
+        print("Invalid input. Please enter a valid integer for samples per unit angle.\n")
 
 while True:
     try:
         SamplePerUnitK = int(input("Enter samples per unit radius (k)\n"))
         break
     except ValueError:
-        print("Invalid input. Please enter a valid integer for samples per unit radius.")
+        print("Invalid input. Please enter a valid integer for samples per unit radius.\n")
 
 nt = int(SamplePerUnitT * (tmax - tmin))      #Samples along t
 nk = int(SamplePerUnitK * (kmax - kmin))      #Samples along radius
@@ -105,7 +105,7 @@ while True:
         #Passed all checks
         break
     except Exception as e:
-        print(f"Invalid expression or geometry check failed: {e}. Please reenter both expressions.")
+        print(f"Invalid expression or geometry check failed: {e}. Please reenter both expressions.\n")
 
 _eval_ns = {"np": np}
 
@@ -261,10 +261,10 @@ mesh_final = trimesh.Trimesh(vertices=m.to_mesh().vert_properties,
                              faces=m.to_mesh().tri_verts,
                              process=False)
 
-print("Watertight:", mesh_final.is_watertight)
-print("Volume (mm^3):", mesh_final.volume)
+print("Watertight:", mesh_final.is_watertight, "\n")
+print("Volume (mm^3):", mesh_final.volume, "\n")
 
 #Export
 mesh_final.export("ArchimedianScrew.stl")
-print("Exported ArchimedianScrew.stl")
+print("Exported ArchimedianScrew.stl\n")
 mesh_final.show()
